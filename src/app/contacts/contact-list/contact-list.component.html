@@ -1,0 +1,18 @@
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1>Contacts</h1>
+                <button class="btn btn-success">New Contact</button>
+            </div>
+            <div class="panel-body">
+                <div class="col-xs-12">
+                    <app-contact-item
+                    *ngFor="let contact of contacts"
+                    [contact]="contact"
+                    (click)="onSelected(contact)"
+                    ></app-contact-item>
+                </div>
+            </div>
+        </div>
+
+
