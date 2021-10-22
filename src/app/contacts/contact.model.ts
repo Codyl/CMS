@@ -1,5 +1,10 @@
 export default class Contact {
-    constructor(public id, public name, public email, public phone, public imgUrl, public group) {
-
-    }
+  constructor(
+    public id: string,
+    public name: string,
+    public email: string,
+    public phone: string,
+    public imageUrl: string,
+    public group: Contact[]
+  ) {}
 }

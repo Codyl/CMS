@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output } from '@angular/core';
 import Document from '../document.model';
+import { DocumentService } from '../document.service';
 
 @Component({
   selector: 'app-document-list',
@@ -7,51 +8,16 @@ import Document from '../document.model';
   styleUrls: ['./document-list.component.css']
 })
 export class DocumentListComponent implements OnInit {
-  documents: Document[] = [
-      {
-        id: 1,
-        name: 'test1',
-        url: 'test.com',
-        description: 'A test of the app',
-        children: ''
-      },
-      {
-        id: 2,
-        name: 'test2',
-        url: 'test.com',
-        description: 'A test of the app',
-        children: ''
-      },
-      {
-        id: 3,
-        name: 'test3',
-        url: 'test.com',
-        description: 'A test of the app',
-        children: ''
-      },
-      {
-        id: 4,
-        name: 'test4',
-        url: 'test.com',
-        description: 'A test of the app',
-        children: ''
-      },
-      {
-        id: 5,
-        name: 'test5',
-        url: 'test.com',
-        description: 'A test of the app',
-        children: ''
-      }
-    ];
-  @Output() selectedDocumentEvent = new EventEmitter<Document>();
-  constructor() { }
+  documents: Document[] = [];
+  constructor(private documentService: DocumentService) { }
 
   ngOnInit(): void {
-    
-  }
-  onSelectedDocument(document: Document) {
-    this.selectedDocumentEvent.emit(document);
+    this.documents = this.documentService.getDocuments();
+    this.documentService.documentChangedEvent.subscribe(
+      (changedDocs: Document[]) => {
+        this.documents = changedDocs;
+      }
+    )
   }
 
 }
