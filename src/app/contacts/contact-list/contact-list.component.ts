@@ -8,7 +8,7 @@ import { ContactService } from '../contact.service';
   styleUrls: ['./contact-list.component.css']
 })
 export class ContactListComponent implements OnInit {
-  contacts: Contact[];
+  contacts: Contact[] = [];
 
   constructor(private contactService: ContactService) { }
 

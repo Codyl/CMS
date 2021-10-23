@@ -9,7 +9,8 @@
     <div class="center-panel">
       <app-document-item
       *ngFor='let document of documents'
-      [document]="document" [routerLink]="['/:id']"
+      [document]="document" [
+      routerLink]="[document.id]"
       ></app-document-item>
     </div>
   </div>

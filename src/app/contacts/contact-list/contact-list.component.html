@@ -5,11 +5,11 @@
                 <button class="btn btn-success">New Contact</button>
             </div>
             <div class="panel-body">
-                <div class="col-xs-12">
+                <div class="col-12">
                     <app-contact-item
                     *ngFor="let contact of contacts"
                     [contact]="contact"
-                    [routerLink]="['/:id']"
+                    [routerLink]="[contact.id]"
                     ></app-contact-item>
                 </div>
             </div>

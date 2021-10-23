@@ -3,7 +3,7 @@
         <h1>{{contact.name}} </h1>
         <img src="{{contact.imageUrl}}" alt="">
         
-        <a class="btn btn-primary" [routerLink]="['/edit']">Edit</a>
+        <a class="btn btn-primary" [routerLink]="['edit']">Edit</a>
         <a class="btn btn-danger" (click)="onDelete()">Delete</a>
     </div>
     <div class="panel-body">

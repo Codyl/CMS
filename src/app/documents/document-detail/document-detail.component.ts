@@ -25,7 +25,7 @@ export class DocumentDetailComponent implements OnInit {
         this.document = doc;
       }
     );
-    this.nativeWindow = this.windref.getNativeWindow()
+    this.nativeWindow = this.windref.getNativeWindow();
   }
 
   onView() {
