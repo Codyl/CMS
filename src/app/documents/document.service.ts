@@ -56,8 +56,9 @@ export class DocumentService {
       return;
     }
     this.maxDocumentId++;
-    newDocument.id = this.maxDocumentId;
+    newDocument.id = this.maxDocumentId.toString();
     this.documents.push(newDocument);
+    console.log(this.documents);
     const documentsListClone = this.documents.slice();
     this.documentListChangedEvent.next(documentsListClone);
   }

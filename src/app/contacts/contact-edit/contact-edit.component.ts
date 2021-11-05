@@ -45,6 +45,7 @@ export class ContactEditComponent implements OnInit {
     this.router.navigateByUrl('/contacts');
   }
   onSubmit(form: NgForm) {
+    console.log(form.value)
     const value = form.value;
     let newContact = new Contact(
       this.contactService.getMaxId().toString(),
