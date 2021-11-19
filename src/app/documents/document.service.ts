@@ -19,11 +19,10 @@ export class DocumentService {
   }
 
   fetchDocuments() {
-    this.http
-      .get(
-        'https://cms-project-232cf-default-rtdb.firebaseio.com/documents.json'
-      )
-      .subscribe(
+    const getDocObservable = this.http.get<Document[]>(
+      'https://cms-project-232cf-default-rtdb.firebaseio.com/documents.json'
+    );
+      getDocObservable.subscribe(
         (documents: Document[]) => {
           this.documents = documents;
           this.maxDocumentId = this.getMaxId();
@@ -37,7 +36,8 @@ export class DocumentService {
         (error: any) => {
           console.log(error.message);
         }
-      );
+    );
+    return getDocObservable;
   }
 
   getDocuments() {
@@ -59,8 +59,6 @@ export class DocumentService {
     const pos = this.documents.indexOf(document);
     if (pos < 0) return;
     this.documents.splice(pos, 1);
-    const documentsListClone = this.documents.slice();
-    // this.documentListChangedEvent.next(documentsListClone);
     this.storeDocuments();
   }
 
@@ -83,8 +81,6 @@ export class DocumentService {
     newDocument.id = this.maxDocumentId.toString();
     this.documents.push(newDocument);
     console.log(this.documents);
-    const documentsListClone = this.documents.slice();
-    // this.documentListChangedEvent.next(documentsListClone);
     this.storeDocuments();
   }
 
@@ -92,16 +88,16 @@ export class DocumentService {
     if (!originalDocument || !newDocument) {
       return;
     }
+
     const pos = this.documents.indexOf(originalDocument);
     if (pos < 0) {
       return;
     }
     newDocument.id = originalDocument.id;
     this.documents[pos] = newDocument;
-    const documentsListClone = this.documents.slice();
-    // this.documentListChangedEvent.next(documentsListClone);
     this.storeDocuments();
   }
+
   storeDocuments() {
     const documents = JSON.stringify(this.documents);
     let header = new HttpHeaders({ 'Content-Type': 'application/json' });
