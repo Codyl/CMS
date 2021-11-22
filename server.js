@@ -1,17 +1,39 @@
 // Get dependencies
-var express = require("express");
-var path = require("path");
-var http = require("http");
-var bodyParser = require("body-parser");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+const express = require("express");
+const path = require("path");
+const http = require("http");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const mongoose = require("mongoose");
+
+const app = express(); // create an instance of express
 
 // import the routing file to handle the default (index) route
-var index = require("./server/routes/app");
+const index = require("./server/routes/app");
 
 // ... ADD CODE TO IMPORT YOUR ROUTING FILES HERE ...
+const messageRoutes = require("./server/routes/messages");
+const contactRoutes = require("./server/routes/contacts");
+const documentRoutes = require("./server/routes/documents");
 
-var app = express(); // create an instance of express
+app.use("/", index);
+app.use("/messages", messageRoutes);
+app.use("/contacts", contactRoutes);
+app.use("/documents", documentRoutes);
+
+// establish a connection to the mongo database
+mongoose.connect(
+  "mongodb://localhost:27017/cms",
+  { useNewUrlParser: true },
+  (err, res) => {
+    if (err) {
+      console.log("Connection failed: " + err);
+    } else {
+      console.log("Connected to database!");
+    }
+  }
+);
 
 // Tell express to use the following parsers for POST data
 app.use(express.json());
@@ -63,13 +85,3 @@ const server = http.createServer(app);
 server.listen(port, function () {
   console.log("API running on localhost: " + port);
 });
-
-const index = require('./server/routes/app');
-const messageRoutes = require('./server/routes/messages');
-const contactRoutes = require('./server/routes/contacts');
-const documentRoutes = require('./server/routes/documents');
-
-app.use('/', index);
-app.use('/messages', messageRoutes);
-app.use('/contacts', contactsRoutes);
-app.use('/documents', documentRoutes);
